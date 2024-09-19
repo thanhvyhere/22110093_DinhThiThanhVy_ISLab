@@ -5,6 +5,7 @@
 ---
 ## Task 1: Inject code to delete file
 **Source code: .asm file**
+
 ![alt text](./image/image-11.png)
 
 **Run virtual environment by docker file**
