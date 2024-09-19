@@ -57,12 +57,15 @@ Observing the ASCII table, we need to avoid the following characters:
 - `0x0a` because it's the newline character and would also terminate the string.
 
 Additionally, `0x0a` has a decimal value of 10, and upon reviewing the assembly code, we find:
+
 ![alt text](./image/image-17.png)
 
 - Change file asm to this:
+
 ![alt text](./image/image-20.png)
 
 - Get the shellcode again, we get
+
 `\xeb\x14\x31\xc0\xb0\x08\x04\x02\xbb\x7b\x80\x04\x08\xcd\x80\xb8\x01\x00\x00\x00\xcd\x80\xe8\xe7\xff\xff\xff\x64\x75\x6d\x6d\x79\x66\x69\x6c\x65\x00\`
 
 ![alt text](./image/image-19.png)
