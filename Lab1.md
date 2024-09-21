@@ -8,7 +8,7 @@
 
 **Run bof1.c file** 
 
-`gcc -g bof2.c -o bof2.out -fno-stack-protector -mpreferred-stack-boundary=2`
+`gcc -g bof1.c -o bof1.out -fno-stack-protector -mpreferred-stack-boundary=2`
 
  By using `-fno-stack-protector`, the program is compiled without stack protection, making it easier to exploit buffer overflow vulnerabilities, which might otherwise be caught by the stack protection mechanism.
 
