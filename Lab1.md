@@ -98,4 +98,4 @@ We get the address of shell function is: `0804845b`
 
 ![alt text](./image/image-9.png)
 
-=> Seccessful
+=> Successful
